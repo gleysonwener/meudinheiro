@@ -1,0 +1,19 @@
+git init
+
+git remote add origin https://github.com/gleysonwener/meudinheiro.git
+
+criar o arquivo .gitignore na raiz do projeto
+
+git status
+
+git add .
+
+git status
+
+git commit -m "Subindo projeto"
+
+
+
+configuração para identificar o usuario la no commit do git(remotamente)
+git config --global user.name "Seu nome"
+git config --global user.email "Seu email"
