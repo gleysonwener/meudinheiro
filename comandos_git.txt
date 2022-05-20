@@ -12,8 +12,17 @@ git status
 
 git commit -m "Subindo projeto"
 
-
-
+git push origin master
+(se der erro, em que redefinir as configurações globais)
 configuração para identificar o usuario la no commit do git(remotamente)
 git config --global user.name "Seu nome"
 git config --global user.email "Seu email"
+
+ git config --global --edit
+(comando para editar as configurações globais)
+
+ git config --global --unset core.excludesfile
+(comando para excluir o user.name e user.email atual, para posteriormente adicionar novo usuário e novo email)
+
+
+
