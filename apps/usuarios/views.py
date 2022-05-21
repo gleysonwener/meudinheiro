@@ -19,7 +19,7 @@ def novo_usuario(request):
             user.set_password(user.password)  # faz o hash do password
             user.save()
             messages.success(request, 'Contra criada com sucesso')
-            return redirect('usuarios:login_usuario')
+            return redirect('usuarios:usuario_login')
     else:
         form = UsuarioForm()
     context['form'] = form
