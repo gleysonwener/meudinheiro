@@ -5,5 +5,7 @@ app_name = 'usuarios'
 from . import views
 
 urlpatterns = [
-    path('', views.inicio, name='inicio')
+    path('login/', views.usuario_login, name='usuario_login'),
+    path('novo/', views.novo_usuario, name='novo_usuario'),
+    path('', views.inicio, name='inicio'),
 ]
