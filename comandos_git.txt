@@ -13,7 +13,7 @@ git status
 git commit -m "Subindo projeto"
 
 git push origin master
-(se der erro, em que redefinir as configurações globais)
+(se der erro, tem que redefinir as configurações globais)
 configuração para identificar o usuario la no commit do git(remotamente)
 git config --global user.name "Seu nome"
 git config --global user.email "Seu email"

@@ -41,7 +41,7 @@ def usuario_login(request):
                 if user.is_active:
                     login(request, user)
                     messages.success(request, 'Login feito com sucesso')
-                    return HttpResponse('<h1>Você fez login</h1>')
+                    return redirect('financas:principal')
                 else:
                     messages.warning(request, 'Sua conta está inativa, contate o suporte.')
                     return redirect('usuarios:usuario_login')
@@ -53,3 +53,8 @@ def usuario_login(request):
         context['form'] = form
     return render(request, template_name, context)
 
+
+def usuario_logout(request):
+    logout(request)
+    messages.info(request, 'Você saiu do sistema')
+    return redirect('usuarios:usuario_login')
