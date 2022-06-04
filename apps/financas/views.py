@@ -7,10 +7,18 @@ from .models import Categoria, Receita, Despesa
 from .forms import CategoriaForm, ReceitaForm, DespesaForm
 
 
+
 @login_required
 def principal(request):
     template_name = 'financas/principal.html'
-    context = {}
+    ultimas_receitas = Receita.objects.filter(usuario=request.user).order_by('-id')[:3]
+    ultimas_despesas = Despesa.objects.filter(usuario=request.user).order_by('-id')[:3]
+    ultimas_categorias = Categoria.objects.filter(usuario=request.user).order_by('-id')[:3]
+    context = {
+        'ultimas_receitas': ultimas_receitas,
+        'ultimas_despesas': ultimas_despesas,
+        'ultimas_categorias': ultimas_categorias,
+    }
 
     return render(request, template_name, context)
 

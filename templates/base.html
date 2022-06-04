@@ -41,8 +41,8 @@
           </li>
 
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Digite..." aria-label="Search">
+        <form method="GET" class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Digite..." aria-label="Search" name="buscar">
           <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
       </div>
@@ -55,5 +55,7 @@
 
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'jquery.mask.min.js' %}"></script>
+    <!--<script src="{% static 'mascaras.js' %}"></script>-->
   </body>
 </html>
