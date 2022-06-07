@@ -41,8 +41,8 @@
           </li>
 
         </ul>
-        <form method="GET" class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Digite..." aria-label="Search" name="buscar">
+        <form method="GET" class="d-flex" role="search" action="{% url 'financas:buscar' %}">
+          <input class="form-control me-2" type="text" placeholder="Digite..." aria-label="Search" name="termo">
           <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
       </div>

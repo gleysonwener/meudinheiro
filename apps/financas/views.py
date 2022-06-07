@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -8,8 +10,16 @@ from .forms import CategoriaForm, ReceitaForm, DespesaForm
 
 
 
+
 @login_required
 def principal(request):
+
+
+
+    cont_receitas = Receita.objects.filter(usuario=request.user)
+    cont_despesas = Despesa.objects.filter(usuario=request.user)
+    cont_categorias = Categoria.objects.filter(usuario=request.user)
+
     template_name = 'financas/principal.html'
     ultimas_receitas = Receita.objects.filter(usuario=request.user).order_by('-id')[:3]
     ultimas_despesas = Despesa.objects.filter(usuario=request.user).order_by('-id')[:3]
@@ -18,6 +28,10 @@ def principal(request):
         'ultimas_receitas': ultimas_receitas,
         'ultimas_despesas': ultimas_despesas,
         'ultimas_categorias': ultimas_categorias,
+        'cont_receitas': cont_receitas,
+        'cont_despesas': cont_despesas,
+        'cont_categorias': cont_categorias,
+
     }
 
     return render(request, template_name, context)
@@ -214,3 +228,21 @@ def apagar_despesa(request, pk):
         return redirect('financas:lista_despesas')
     messages.info(request, 'Despesa Apagada.')
     return redirect('financas:lista_despesas')
+
+
+@login_required
+def buscar(request):
+    template_name = 'financas/busca_resultados.html'
+    context = {}
+    termo = request.GET.get('termo', None)
+
+    if termo is not None:
+        categorias = Categoria.objects.busca(termo=termo, usuario=request.user)
+        receitas = Receita.objects.busca(termo=termo, usuario=request.user)
+        despesas = Despesa.objects.busca(termo=termo, usuario=request.user)
+
+        context['categorias'] = categorias
+        context['receitas'] = receitas
+        context['despesas'] = despesas
+
+    return render(request, template_name, context)

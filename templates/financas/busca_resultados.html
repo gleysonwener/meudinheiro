@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block titulo %}
-    Seja bem vindo | {{ block.super }}
+    Resultado da Busca | {{ block.super }}
 {% endblock titulo %}
 
 {% block corpo %}
@@ -12,10 +12,10 @@
 
         <div class="col">
 
-            <h1>ATIVIDADES RECENTES</h1>
+            <h1>RESULTADOS DA BUSCA</h1>
 
 
-            <h3>Em Receitas total: {{ cont_receitas.count }}</h3>
+            <h3>Em Receitas</h3>
 
             <table class="table table-hover">
                 <thead>
@@ -23,17 +23,19 @@
                    <th scope="col">Id</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Valor R$</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Ações</th>
 
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for receita in ultimas_receitas %}
+                {% for receita in receitas %}
                     <tr>
                         <th scope="row">{{ receita.id }}</th>
                         <td>{{ receita.descricao }}</td>
                         <td>{{ receita.valor }}</td>
+                        <td>{{ receita.categoria }}</td>
                         <td><a href="{% url 'financas:editar_receita' receita.id  %}" class="btn btn-primary btn-sm">Editar</a>
                             <a href="{% url 'financas:apagar_receita' receita.id  %}" class="btn btn-danger btn-sm">Apagar</a>
                         </td>
@@ -43,25 +45,29 @@
                 </tbody>
             </table>
 
-             <h3>Em Despesas total: {{ cont_despesas.count }}</h3>
+             <h3>Em Despesas</h3>
 
             <table class="table table-hover">
                 <thead>
                 <tr>
                    <th scope="col">Id</th>
                     <th scope="col">Identificação</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col">Valor R$</th>
+                    <th scope="col">Categoria</th>
                     <th scope="col">Ações</th>
 
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for despesa in ultimas_despesas %}
+                {% for despesa in despesas %}
                     <tr>
                         <th scope="row">{{ despesa.id }}</th>
                         <td>{{ despesa.identificacao }}</td>
+                        <td>{{ despesa.descricao }}</td>
                         <td>{{ despesa.valor }}</td>
+                        <td>{{ despesa.Categoria }}</td>
                         <td><a href="{% url 'financas:editar_despesa' despesa.id  %}" class="btn btn-primary btn-sm">Editar</a>
                             <a href="{% url 'financas:apagar_despesa' despesa.id  %}" class="btn btn-danger btn-sm">Apagar</a>
                         </td>
@@ -71,7 +77,7 @@
                 </tbody>
             </table>
 
-             <h3>Em Categorias total: {{ cont_categorias.count }}</h3>
+             <h3>Em Categorias </h3>
 
             <table class="table table-hover">
                 <thead>
@@ -85,10 +91,11 @@
                 </thead>
                 <tbody>
 
-                {% for categoria in ultimas_categorias %}
+                {% for categoria in categorias %}
                     <tr>
                         <th scope="row">{{ categoria.id }}</th>
                         <td>{{ categoria.nome }}</td>
+                        <td>{{ categoria.descricao }}</td>
                         <td>{{ categoria.get_tipo_display }}</td>
                         <td><a href="{% url 'financas:editar_categoria' categoria.id  %}" class="btn btn-primary btn-sm">Editar</a>
                             <a href="{% url 'financas:apagar_categoria' categoria.id  %}" class="btn btn-danger btn-sm">Apagar</a>

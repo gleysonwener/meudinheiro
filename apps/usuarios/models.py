@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     foto = models.ImageField(verbose_name='Foto', upload_to='fotos')
