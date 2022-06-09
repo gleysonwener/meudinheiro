@@ -9,11 +9,13 @@ from .models import Categoria, Receita, Despesa
 from .forms import CategoriaForm, ReceitaForm, DespesaForm
 
 
-
+from django.db.models import Sum
 
 @login_required
 def principal(request):
 
+    soma_receitas = Receita.objects.filter(usuario=request.user).aggregate(Sum('valor')).get('valor__sum', 0.00)
+    soma_despesas = Despesa.objects.filter(usuario=request.user).aggregate(Sum('valor')).get('valor__sum', 0.00)
 
 
     cont_receitas = Receita.objects.filter(usuario=request.user)
@@ -31,7 +33,8 @@ def principal(request):
         'cont_receitas': cont_receitas,
         'cont_despesas': cont_despesas,
         'cont_categorias': cont_categorias,
-
+        'soma_receitas': soma_receitas,
+        'soma_despesas': soma_despesas,
     }
 
     return render(request, template_name, context)
@@ -245,4 +248,23 @@ def buscar(request):
         context['receitas'] = receitas
         context['despesas'] = despesas
 
+    return render(request, template_name, context)
+
+
+@login_required
+def relatorios(request):
+    template_name = 'financas/relatorios.html'
+    context = {}
+    data_inicial = request.GET.get('data-inicial', None)
+    data_final = request.GET.get('data-final', None)
+    tipo =request.GET.get('tipo', None)
+    if data_final and data_inicial:
+        if tipo and tipo == 'RC':
+            receitas = Receita.objects.filter(cadastrada_em__gte=data_inicial,
+                cadastrada_em__lte=data_final) #gte --> great than equals --> less than equals
+            context['receitas'] = receitas
+        else:
+            despesas = Despesa.objects.filter(cadastrada_em__gte=data_inicial,
+                cadastrada_em__lte=data_final)  # gte --> great than equals --> less than equals
+            context['despesas'] = despesas
     return render(request, template_name, context)
