@@ -5,62 +5,74 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block titulo %} Meu Dinheiro - Finanças Pessoais{% endblock titulo %}</title>
+    <title>{% block titulo %} Meu Dinheiro - Finanças Pessoais {% endblock titulo %}</title>
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
   </head>
   <body>
-
     <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Meu Dinheiro</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    {% if user.is_authenticated %}
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Início</a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Operações
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Meu Dinheiro</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        {% if user.is_authenticated %}
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Início</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                  Operações
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'financas:lista_categorias' %}">Categorias</a></li>
+                  <li><a class="dropdown-item" href="{% url 'financas:lista_receitas' %}">Receitas</a></li>
+                  <li><a class="dropdown-item" href="{% url 'financas:lista_despesas' %}">Despesas</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="{% url 'financas:relatorios' %}">Relatórios</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'usuarios:usuario_logout' %}">Sair</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search" action="{% url 'financas:buscar' %}">
+              <input class="form-control me-2" type="search" name="termo" placeholder="Digite..." aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+          </div>
+          <li class="nav-item dropdown px-5" style="list-style-type: none">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProfile" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              {{ user.username }}
+              <img
+                      src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+                      class="rounded-circle z-depth-0"
+                      alt="avatar image"
+                      height="35"
+              />
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'financas:lista_categorias' %}">Categorias</a></li>
-              <li><a class="dropdown-item" href="{% url 'financas:lista_receitas' %}">Receitas</a></li>
-              <li><a class="dropdown-item" href="{% url 'financas:lista_despesas' %}">Despesas</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'financas:relatorios' %}">Relatórios</a></li>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+              <li><a class="dropdown-item" href="{% url 'financas:lista_categorias' %}">Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'financas:relatorios' %}">Trocar senha</a></li>
             </ul>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="{% url 'usuarios:usuario_logout' %}">Sair</a>
-          </li>
-
-        </ul>
-
-        <form method="GET" class="d-flex" role="search" action="{% url 'financas:buscar' %}">
-          <input class="form-control me-2" type="text" placeholder="Digite..." aria-label="Search" name="termo">
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-
-
-            </ul>
-          </li>
-        </form>
+        {% endif %}
       </div>
-    {% endif %}
-  </div>
-</nav>
+    </nav>
     {% block corpo %}
-
-    {% endblock %}
-
+    {% endblock corpo %}
     <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'jquery.mask.min.js' %}"></script>
-    <!--<script src="{% static 'mascaras.js' %}"></script>-->
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/jquery.mask.min.js' %}"></script>
+<!--    <script src="{% static 'js/mascaras.js' %}"></script>-->
   </body>
 </html>
